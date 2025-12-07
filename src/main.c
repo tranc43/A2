@@ -2,7 +2,7 @@
 #include "splash.h"
 
 int main() {
-	intscr();
+	initscr();
 	noecho();
 	curs_set(FALSE);
 	keypad(stdscr, TRUE);
