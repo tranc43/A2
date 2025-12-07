@@ -18,7 +18,7 @@ void splash_screen() {
 		mvprintw(9, 10, "Press 'Q' to quit");
 	
 		for (int i = 0; i < num_options; i++) {
-			if (i == highlight {
+			if (i == highlight) {
 				attron(A_REVERSE);
 			}
 			mvprintw(12 + i, 10, options[i]);
@@ -27,7 +27,7 @@ void splash_screen() {
 		refresh();
 		choice = getch();
 		// Quit 
-		if (choice == 'q' || choice == "Q") {
+		if (choice == 'q' || choice == 'Q') {
 			endwin();
 			return;
 		}
@@ -45,7 +45,7 @@ void splash_screen() {
 			case 10: // ENTER
 				if (highlight == 0) {
 					clear();
-					mvprintw(5, 10 "Starting game.. (Level system will be here)");
+					mvprintw(5, 10, "Starting game.. (Level system will be here)");
 					refresh();
 					refresh();
 					getch();
