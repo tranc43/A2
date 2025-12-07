@@ -32,11 +32,31 @@ void splash_screen() {
 			return;
 		}
 		switch (choice) {
-			case KEY_UP;
-			highlight--;
-			if (highlight < 0)
-			 	highlight = num_options -1;
-			break;
+			case KEY_UP:
+				highlight--;
+				if (highlight < 0)
+			 		highlight = num_options -1;
+				break;
+			case KEY_DOWN:
+				highlight++;
+				if (highlight >= num_options)
+				highlight = 0;
+				break;
+			case 10: // ENTER
+				if (highlight == 0) {
+					clear();
+					mvprintw(5, 10 "Starting game.. (Level system will be here)");
+					refresh();
+					refresh();
+					getch();
+					return;
+				}
+				else if (highlight == 1) {
+					// Quit selected
+					endwin();
+					return;
+				}
+				break;
 		}
 
 	}
