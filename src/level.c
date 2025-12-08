@@ -13,7 +13,7 @@ int level_select_menu(void) {
 		clear();
 		getmaxyx(stdscr, max_y, max_x);
 		box(stdscr, 0,0);	
-		const char *title = "=== LEVEL SELECTION ===";
+		const char *title = "========== LEVEL SELECTION ==========";
 		attron(A_BOLD);
 		mvprintw(3, (max_x - (int)strlen(title)) / 2, "%s", title);
 		attroff(A_BOLD);
