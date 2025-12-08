@@ -67,14 +67,15 @@ void splash_screen() {
 			case 10: // ENTER
 				if (highlight == 0) {
 					int selected = level_select_menu();
-					if (selected == -1) { 
+					if (selected == -1) 
 						return;
-					} else if (selected == 0) {
+					 
+					if (selected == 0) 
 						continue;
-					} else {
+					if (selected == 1) 
 						display_level(selected);
-					}
-				}else if (highlight == 1) {
+				}
+				else if (highlight == 1) {
 					// Quit selected
 					return;
 				}
