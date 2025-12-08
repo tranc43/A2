@@ -4,8 +4,8 @@
 
 int level_select_menu(void) {
 	const char *options[] = { "Level 1", "Level 2", "Go back"};
-	int num_options 3; 
-	int hightlight = 0;	
+	int num_options = 3; 
+	int highlight = 0;	
 	int ch;
 	
 	int max_y, max_x;
@@ -61,7 +61,7 @@ int level_select_menu(void) {
 void display_level(int level) {
 	clear();
 	mvprintw(5, 10, "Starting level %d..", level);
-	mvprintw(7, 10, "Level implementation here later"));
+	mvprintw(7, 10, "Level implementation here later");
 	mvprintw(9, 10, "Press any key to return to the main menu.");
 	refresh();
 	getch();

@@ -9,19 +9,19 @@ void splash_screen() {
 	int num_options = 2;
 	
 	int max_y, max_x;
-	get_maxyx(stdscr, max_y, max_x);
+	getmaxyx(stdscr, max_y, max_x);
 	while (1) { 
 		clear();
-		mvprintw(3, 25, " ==== MACMAN ====");
+		const char *title =  " ==== MACMAN ====");
 		mvprintw(3, (max_x - (int)strlen(title)) / 2, "%s", title);
 		
 		const char *line1 = "Navigate through mazes!";
-		const char *line2 = "Interact with NPCs to receieve a key to exit to survive!");
+		const char *line2 = "Interact with NPCs to receieve a key to exit to survive!";
 		mvprintw(6, (max_x - (int)strlen(title)) / 2, "%s", line1);
 		mvprintw(7, (max_x - (int)strlen(title)) / 2, "%s", line2);
 		
-		conar char *instructions =  "Arrow keys to move, ENTER to select, Q to quit.";
-		mvprintw(10, (max_x - (int)strlen(instructions) / 2, "%s", instructions);
+		const char *instructions =  "Arrow keys to move, ENTER to select, Q to quit.";
+		mvprintw(10, (max_x - (int)strlen(instructions)) / 2, "%s", instructions);
 		
 		int start_y = 14;
 		for (int i = 0; i < num_options; i++) {
@@ -51,7 +51,7 @@ void splash_screen() {
 				break;
 			case 10: // ENTER
 				if (highlight == 0) {
-					int selected = level_select_menu()'
+					int selected = level_select_menu();
 					if (selected == -1) { 
 						return;
 					} else if (select == 0) {
