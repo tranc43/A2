@@ -14,8 +14,11 @@ int level_select_menu(void) {
 		getmaxyx(stdscr, max_y, max_x);
 		box(stdscr, 0,0);	
 		const char *title = "=== LEVEL SELECTION ===";
+		attron(A_BOLD);
 		mvprintw(3, (max_x - (int)strlen(title)) / 2, "%s", title);
+		attroff(A_BOLD);
 		mvprintw(6, (max_x - 34) / 2, "Choose a level or return to menu");
+
 		mvprintw(8, (max_x - 45) / 2,  "Use UP/DOWN, ENTER to Select, 'Q' to quit");
 		int start_y = 11;
 		for (int i = 0; i < num_options; i++) {

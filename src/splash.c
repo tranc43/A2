@@ -2,6 +2,15 @@
 #include "splash.h"
 #include <string.h>
 #include "level.h"
+
+void center_text(int y, const char *text) {
+	int max_y, max_x;
+	getmaxyx(stdscr,  max_y, max_x);
+	mvprintw(y, (max_x - (int)strlen(text)) / 2, "%s", text);
+	
+
+}
+
 void splash_screen() {
 	int highlight = 0;
 	int choice;
@@ -12,33 +21,31 @@ void splash_screen() {
 	getmaxyx(stdscr, max_y, max_x);
 	while (1) { 
 		clear();
-		attron(COLOR_PAIR(1));
 		box(stdscr, 0, 0);
-		attroff(COLOR_PAIR(1));
+	
 
-		const char *title =  "============== MACMAN ===============";
 		attron(A_BOLD);
-		mvprintw(3, (max_x - (int)strlen(title)) / 2, "%s", title);
+		center_text(3,"========= MACMAN =========");
 		attroff(A_BOLD);
 
 
-		const char *line1 = "\tNavigate through mazes!";
-		const char *line2 = "\tInteract with NPCs to receieve a key to exit to survive!";
-		mvprintw(6, (max_x - (int)strlen(title)) / 3, "%s", line1);
-		mvprintw(7, (max_x - (int)strlen(title)) / 3, "%s", line2);
-		
-		const char *instructions =  "Arrow keys to move, ENTER to select, Q to quit.";
-		attron(A_BOLD);
-		mvprintw(10, (max_x - (int)strlen(instructions)) / 2, "%s", instructions);
+		center_text(6, "Navigate through mazes!");
+		center_text(7, "Interact with NPCs to receieve a key to exit to survive!");
+	
+		attron(A_BOLD);		
+		center_text(10, "Arrow keys to move, ENTER to select, Q to quit.");
 		attroff(A_BOLD);
 		int start_y = 14;
 		for (int i = 0; i < num_options; i++) {
-			int x =(max_x - (int)strlen(options[i])) / 2;
 			if (i == highlight) {
 				attron(A_REVERSE);
 			}
-			mvprintw(start_y + i, x, options[i]);
-			attroff(A_REVERSE);
+			center_text(start_y + i, options[i]);
+			if (i == highlight) {
+				attroff(A_REVERSE);
+			}
+
+
 		}
 		refresh();
 		choice = getch();
