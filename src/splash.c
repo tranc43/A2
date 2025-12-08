@@ -16,20 +16,21 @@ void splash_screen() {
 		box(stdscr, 0, 0);
 		attroff(COLOR_PAIR(1));
 
-		const char *title =  "============== MACMAN ========== ====";
+		const char *title =  "============== MACMAN ===============";
 		attron(A_BOLD);
 		mvprintw(3, (max_x - (int)strlen(title)) / 2, "%s", title);
 		attroff(A_BOLD);
 
 
-		const char *line1 = "Navigate through mazes!";
-		const char *line2 = "Interact with NPCs to receieve a key to exit to survive!";
-		mvprintw(6, (max_x - (int)strlen(title)) / 2, "%s", line1);
-		mvprintw(7, (max_x - (int)strlen(title)) / 2, "%s", line2);
+		const char *line1 = "\tNavigate through mazes!";
+		const char *line2 = "\tInteract with NPCs to receieve a key to exit to survive!";
+		mvprintw(6, (max_x - (int)strlen(title)) / 3, "%s", line1);
+		mvprintw(7, (max_x - (int)strlen(title)) / 3, "%s", line2);
 		
 		const char *instructions =  "Arrow keys to move, ENTER to select, Q to quit.";
+		attron(A_BOLD);
 		mvprintw(10, (max_x - (int)strlen(instructions)) / 2, "%s", instructions);
-		
+		attroff(A_BOLD);
 		int start_y = 14;
 		for (int i = 0; i < num_options; i++) {
 			int x =(max_x - (int)strlen(options[i])) / 2;

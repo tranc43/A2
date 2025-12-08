@@ -9,11 +9,10 @@ int level_select_menu(void) {
 	int ch;
 	
 	int max_y, max_x;
-	getmaxyx(stdscr, max_y, max_x);
-	
 	while (1) {
 		clear();
-	
+		getmaxyx(stdscr, max_y, max_x);
+		box(stdscr, 0,0);	
 		const char *title = "=== LEVEL SELECTION ===";
 		mvprintw(3, (max_x - (int)strlen(title)) / 2, "%s", title);
 		mvprintw(6, (max_x - 34) / 2, "Choose a level or return to menu");
