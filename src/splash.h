@@ -15,8 +15,6 @@ menu includes
 #ifndef SPLASH_h
 #define SPLASH_H
 
-int level_select_menu(void);
-
 void splash_screen();
 
 #endif
