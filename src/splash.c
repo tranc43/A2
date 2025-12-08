@@ -12,10 +12,16 @@ void splash_screen() {
 	getmaxyx(stdscr, max_y, max_x);
 	while (1) { 
 		clear();
+		attron(COLOR_PAIR(1));
 		box(stdscr, 0, 0);
+		attroff(COLOR_PAIR(1));
+
 		const char *title =  "============== MACMAN ========== ====";
+		attron(A_BOLD);
 		mvprintw(3, (max_x - (int)strlen(title)) / 2, "%s", title);
-		
+		attroff(A_BOLD);
+
+
 		const char *line1 = "Navigate through mazes!";
 		const char *line2 = "Interact with NPCs to receieve a key to exit to survive!";
 		mvprintw(6, (max_x - (int)strlen(title)) / 2, "%s", line1);
