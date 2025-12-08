@@ -12,7 +12,7 @@ void splash_screen() {
 	getmaxyx(stdscr, max_y, max_x);
 	while (1) { 
 		clear();
-		const char *title =  " ==== MACMAN ====");
+		const char *title =  " ==== MACMAN ====";
 		mvprintw(3, (max_x - (int)strlen(title)) / 2, "%s", title);
 		
 		const char *line1 = "Navigate through mazes!";
@@ -25,7 +25,7 @@ void splash_screen() {
 		
 		int start_y = 14;
 		for (int i = 0; i < num_options; i++) {
-			int x= = (max_x - (int)strlen(options[i])) / 2;
+			int x =(max_x - (int)strlen(options[i])) / 2;
 			if (i == highlight) {
 				attron(A_REVERSE);
 			}
@@ -54,13 +54,12 @@ void splash_screen() {
 					int selected = level_select_menu();
 					if (selected == -1) { 
 						return;
-					} else if (select == 0) {
+					} else if (selected == 0) {
 						continue;
 					} else {
 						display_level(selected);
 					}
-				}
-				else if (highlight == 1) {
+				}else if (highlight == 1) {
 					// Quit selected
 					return;
 				}
