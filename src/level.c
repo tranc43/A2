@@ -56,3 +56,15 @@ int level_select_menu(void) {
 	}
 
 }
+
+
+void display_level(int level) {
+	clear();
+	mvprintw(5, 10, "Starting level %d..", level);
+	mvprintw(7, 10, "Level implementation here later"));
+	mvprintw(9, 10, "Press any key to return to the main menu.");
+	refresh();
+	getch();
+
+
+}
