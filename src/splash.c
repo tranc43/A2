@@ -12,7 +12,8 @@ void splash_screen() {
 	getmaxyx(stdscr, max_y, max_x);
 	while (1) { 
 		clear();
-		const char *title =  " ==== MACMAN ====";
+		box(stdscr, 0, 0);
+		const char *title =  "============== MACMAN ========== ====";
 		mvprintw(3, (max_x - (int)strlen(title)) / 2, "%s", title);
 		
 		const char *line1 = "Navigate through mazes!";
