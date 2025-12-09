@@ -1,9 +1,39 @@
+/*
+@name Christian tran
+@file splash.c
+@brief impl ements the games splash screen (main menu)
+
+splash screen displays
+	1. game title
+	2. game description
+	3. controls overview
+	4. Option to play or quit
+
+Controls:
+	1. Aarrow keys to move
+	2. Enter to select 
+	3. Q to quit immediately
+
+When Play game is selected, the splash screen opens the level selection menu. After gameplay ends control returns here.
+
+*/
+
+
 #include <ncurses.h>
 #include "splash.h"
 #include <string.h>
 #include "level_select.h"
 // #include "level1.h"
 #include "level2.h"
+
+
+/*
+@brief helper function to print centered text
+
+@param y Row coordinate for the prionted text.
+@param txt the string to print
+
+*/
 
 void center_text(int y, const char *text) {
 	int max_y, max_x;
@@ -13,6 +43,17 @@ void center_text(int y, const char *text) {
 
 }
 
+
+/*
+@brief draws splash screen and waits for user input
+
+Function loops internally until the player either:
+	1. Starting the game (level selection)
+	2. Quits the program
+
+@return void
+
+*/
 void splash_screen() {
 	int highlight = 0;
 	int choice;
