@@ -13,7 +13,7 @@ static void center_text(int y, const char *text) {
 int level_select_menu(void) {
 	const char *options[] = {"Level 1", "Level 2", "Return to Menu"};
 	int num_options = 3;
-	int hightlight = 0;
+	int highlight = 0;
 	int ch;
 	
 	while (1) {
