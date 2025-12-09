@@ -74,8 +74,8 @@ void splash_screen() {
 					 
 					if (selected == 0) 
 						continue;
-					if (selected == 1) 
-						display_level(selected);
+					if (selected == 2) 
+						play_level2();
 				}
 				else if (highlight == 1) {
 					// Quit selected
