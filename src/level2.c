@@ -189,3 +189,67 @@ static void level2_update_npc(Level2State *st) {
 
 
 
+/*main gameplay */
+
+
+void play_level2(void) {
+	Level2State st;
+
+	st.player_y = 1;
+	st.player+x = 1;
+
+	st.npc_y = 11;
+	st.npc_x = 21;
+	st.npc_dir = 1;
+
+	st.has_key = false;
+	st.key_on_ground = false;
+	st.key_y = 0;
+	st.key_x = 0;
+
+	st.running = true;
+
+	int max_y, max_x;
+
+	while (st.running) {
+		level2_render($st);
+		getmaxyx(stdscr, max_y, max_x);
+	
+		int ch = getch();
+		
+		if (ch == 'p'|| ch == 'P' || ch == 'q' || ch == 'Q') {
+			pause_quit_menu();
+			continue;
+		}
+		// Plater movement
+		
+		int new_y = st.player_y;
+		int new_x = st.player_x;
+
+		if (ch == KEY_UP) new_y--;
+		if (ch == KEY_DOWN) new_y++;
+		if (ch == KEY_LEFT) new_x--;
+		if (ch == KEY_RIGHT) new x++;
+
+		if (level2_can_move_to(new_y, new_x)) {
+			char tile = level2_get_tile(new_y, new_x);
+
+			if (tile == 'D') {
+				if(st.has_key) {
+					game_end_screen("YOU WIN!", "escaped hard maze using key");
+					st.running = false;
+					continue;
+					
+				}else { 
+					mvprintw(max_y - 4, 2, "The door is locked. find key..");
+					refresh();
+					getch();
+				}
+			}else {
+				st.player_y = new_y;
+				st.player_x = new_x;
+			}
+		}
+	
+	}
+}
