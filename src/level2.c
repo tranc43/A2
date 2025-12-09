@@ -81,7 +81,7 @@ static void pause_quit_menu(void) {
 }
 
 static void game_end_screen(const char *line1, const char *line2) {
-	int max_y, int max_x;
+	int max_y, max_x;
 	getmaxyx(stdscr, max_y, max_x);
 
 	clear();
@@ -132,7 +132,7 @@ static void level2_render_map(int offset_y, int offset_x) {
 }
 
 static void level2_render_entities(const Level2State *st, int offset_y, int offset_x) {
-		mvaddch(offset_y + st->npc_y, offset_x + st->npc_X, 'N');
+		mvaddch(offset_y + st->npc_y, offset_x + st->npc_x, 'N');
 
 		if (st->key_on_ground && !st->has_key) {
 			mvaddch(offset_y + st->key_y, offset_x + st->key_x, 'K');
@@ -150,7 +150,7 @@ static void level2_render_hud(const Level2State *st) {
 		
 		mvprintw(max_y - 3, 2, "LEVEL 2- HARD MAZE");
 		mvprintw(max_y - 2, 2, 
-			"Key: %s | T = Talk to npc | X = Pick up key | P/Q = Pause and Quit", st->has_key ? "YES" : (st->key_on_ground ? "ON GROUND" : "NO")):
+			"Key: %s | T = Talk to npc | X = Pick up key | P/Q = Pause and Quit", st->has_key ? "YES" : (st->key_on_ground ? "ON GROUND" : "NO"));
 }
 
 
@@ -229,7 +229,7 @@ void play_level2(void) {
 		if (ch == KEY_UP) new_y--;
 		if (ch == KEY_DOWN) new_y++;
 		if (ch == KEY_LEFT) new_x--;
-		if (ch == KEY_RIGHT) new x++;
+		if (ch == KEY_RIGHT) new_x++;
 
 		if (level2_can_move_to(new_y, new_x)) {
 			char tile = level2_get_tile(new_y, new_x);
