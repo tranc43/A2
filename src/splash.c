@@ -38,6 +38,7 @@ When Play game is selected, the splash screen opens the level selection menu. Af
 
 void center_text(int y, const char *text) {
 	int max_y, max_x;
+	(void)max_y; // didnt use max y here
 	getmaxyx(stdscr,  max_y, max_x);
 	mvprintw(y, (max_x - (int)strlen(text)) / 2, "%s", text);
 	
