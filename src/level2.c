@@ -74,7 +74,7 @@ static void pause_quit_menu(void) {
 			exit(0);
 		}
 		if (ch == 'p' || ch == 'P') {
-			break'
+			break;
 		}
 
 	}
@@ -82,7 +82,7 @@ static void pause_quit_menu(void) {
 
 static void game_end_screen(const char *line1, const char *line2) {
 	int max_y, int max_x;
-	getmaxyx(stdscr< max_y, max_x);
+	getmaxyx(stdscr, max_y, max_x);
 
 	clear();
 	box(stdscr, 0, 0);
@@ -131,7 +131,7 @@ static void level2_render_map(int offset_y, int offset_x) {
 
 }
 
-static void level2_render_entitites(const Level2State *st, int offset_y, int offset_x) {
+static void level2_render_entities(const Level2State *st, int offset_y, int offset_x) {
 		mvaddch(offset_y + st->npc_y, offset_x + st->npc_X, 'N');
 
 		if (st->key_on_ground && !st->has_key) {
@@ -196,7 +196,7 @@ void play_level2(void) {
 	Level2State st;
 
 	st.player_y = 1;
-	st.player+x = 1;
+	st.player_x = 1;
 
 	st.npc_y = 11;
 	st.npc_x = 21;
@@ -212,7 +212,7 @@ void play_level2(void) {
 	int max_y, max_x;
 
 	while (st.running) {
-		level2_render($st);
+		level2_render(&st);
 		getmaxyx(stdscr, max_y, max_x);
 	
 		int ch = getch();
@@ -262,7 +262,7 @@ void play_level2(void) {
 					if (level2_get_tile(drop_y, drop_x) == '#') {
 						drop_y = st.npc_y -1;
 					}
-					if (level2_get_tile(drop_y, drop_x_ == '#') {
+					if (level2_get_tile(drop_y, drop_x) == '#') {
 						drop_y = st.npc_y;
 						drop_x = st.npc_x + 1;
 					}
