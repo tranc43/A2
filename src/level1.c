@@ -1,9 +1,9 @@
 /*
-@file level2.c
-@brief Implements Level 2: Hard maze including NPC interaction, dropped key
+@file level1.c
+@brief Implements Level 1: Hard maze including NPC interaction, dropped key
 locked door, movement, pause menu and win conidtion
 
-Level 2 includes:
+Level 1 includes:
 	- Maze navigated using arrow keys
 	- Npc that moves horizontrally and interacts with player with T keybind
 
@@ -16,10 +16,10 @@ Level 2 includes:
 #include <string.h>
 #include <stdbool.h>
 #include <stdlib.h>
-#include "level2.h"
+#include "level1.h"
 
-#define LEVEL2_HEIGHT 18
-#define LEVEL2_WIDTH 60
+#define LEVEL1_HEIGHT 18
+#define LEVEL1_WIDTH 60
 
 
 /*
@@ -29,16 +29,16 @@ D = locked exist door
 
 
 */
-static const char *level2_layout[LEVEL2_HEIGHT] = {
+static const char *level1_layout[LEVEL1_HEIGHT] = {
 	"############################################################",//1
-	"#          #        ######       #           #            D#",//2
-	"#  ####### # ###### #   # ###### # ####### ### #############",//3
+	"#          #        #####                    #            D#",//2
+	"#  ### ### # ###### #   # ###### # ####### ### #############",//3
 	"#  #     # #      # #   # #    # # #     #   #           ###",//4
 	"#  # ### # ###### # ##### # ## # # # ### ##### ######   ####",//5
 	"#  # # # #      # #     # # #  # # # # #     #      #     ##",//6
 	"#  # # # ###### # ##### # # # ## # # # ####### #### ## #####",//7
 	"#  # # #      # #     # # # #    # # #       # #  #      ###",//8
-	"#  # # ###### ####### # # ######## # ######### #  #####  ###",//9
+	"#  # # ###### ####### # # ###### # # ######### #  #####  ###",//9
 	"#  # #      # #     # # #        # #         # #      #  # #",//10
 	"#  # ###### # ##### # # #######  #  ######## #  ########## #",//11
 	"#  #      # #     #           #  #           #        #    #",//12
@@ -46,7 +46,7 @@ static const char *level2_layout[LEVEL2_HEIGHT] = {
 	"#       # #     #           # #         #  #       #  #    #",//14
 	"####### # ##### ########### # ####### # # ### #### # ###   #",//15
 	"#     # #     #         # #           #     #    # #       #",//16
-	"#     #       #         # #        #    #        #         #",//17
+	"#     #       #         # #        #  # #        #         #",//17
 	"############################################################",//18
 };
 
@@ -62,7 +62,7 @@ typedef struct {
 	int key_y, key_x;
 	bool running;
 
-} Level2State;
+} Level1State;
 
 static void center_text(int y, const char *text) {
 	int max_y, max_x;
@@ -120,24 +120,24 @@ static void game_end_screen(const char *line1, const char *line2) {
 
 
 
-static char level2_get_tile(int y, int x) {
-	 if (y < 0 || y >= LEVEL2_HEIGHT || x < 0 || x >= LEVEL2_WIDTH) {
+static char level1_get_tile(int y, int x) {
+	 if (y < 0 || y >= LEVEL1_HEIGHT || x < 0 || x >= LEVEL1_WIDTH) {
 		return '#';
 	}
-	return level2_layout[y][x];
+	return level1_layout[y][x];
 
 }
 
-static char level2_can_move_to(int new_y, int new_x) {
-	char tile = level2_get_tile(new_y, new_x);
+static char level1_can_move_to(int new_y, int new_x) {
+	char tile = level1_get_tile(new_y, new_x);
 	return tile != '#';
 
 }
 
-static void level2_render_map(int offset_y, int offset_x) {
-	for (int y = 0; y < LEVEL2_HEIGHT; y++) {
-		for (int x = 0; x < LEVEL2_WIDTH; x++) {
-			char tile = level2_get_tile(y, x);
+static void level1_render_map(int offset_y, int offset_x) {
+	for (int y = 0; y < LEVEL1_HEIGHT; y++) {
+		for (int x = 0; x < LEVEL1_WIDTH; x++) {
+			char tile = level1_get_tile(y, x);
 			mvaddch(offset_y + y, offset_x + x, tile);
 		}
 
@@ -145,7 +145,7 @@ static void level2_render_map(int offset_y, int offset_x) {
 
 }
 
-static void level2_render_entities(const Level2State *st, int offset_y, int offset_x) {
+static void level1_render_entities(const Level1State *st, int offset_y, int offset_x) {
 		mvaddch(offset_y + st->npc_y, offset_x + st->npc_x, 'N');
 
 		if (st->key_on_ground && !st->has_key) {
@@ -158,27 +158,27 @@ static void level2_render_entities(const Level2State *st, int offset_y, int offs
 }
 
 
-static void level2_render_hud(const Level2State *st) {
+static void level1_render_hud(const Level2State *st) {
 		int max_y, max_x;
 		getmaxyx(stdscr, max_y, max_x);
 		
-		mvprintw(max_y - 3, 2, "LEVEL 2- HARD MAZE");
+		mvprintw(max_y - 3, 2, "LEVEL 1- EASY MAZE");
 		mvprintw(max_y - 2, 2, 
 			"Key: %s | T = Talk to npc | X = Pick up key | P/Q = Pause and Quit", st->has_key ? "YES" : (st->key_on_ground ? "ON GROUND" : "NO"));
 }
 
 
-static void level2_render(const Level2State *st) {
+static void level1_render(const Level2State *st) {
 		int max_y, max_x;
 		getmaxyx(stdscr, max_y, max_x);
 		clear();
 		box(stdscr, 0,0);
 		
 		int offset_y = 1;
-		int offset_x = (max_x - LEVEL2_WIDTH) / 2;	
-		level2_render_map(offset_y, offset_x);
-		level2_render_entities(st, offset_y, offset_x);
-		level2_render_hud(st);
+		int offset_x = (max_x - LEVEL1_WIDTH) / 2;	
+		level1_render_map(offset_y, offset_x);
+		level1_render_entities(st, offset_y, offset_x);
+		level1_render_hud(st);
 
 		refresh();
 
@@ -187,14 +187,14 @@ static void level2_render(const Level2State *st) {
 
 /*NPC */
 
-static void level2_update_npc(Level2State *st) {
+static void level1_update_npc(Level1State *st) {
 	int next_x = st->npc_x + st->npc_dir;
 
-	if (next_x < 0 || next_x >= LEVEL2_WIDTH) {
+	if (next_x < 0 || next_x >= LEVEL1_WIDTH) {
 		st->npc_dir *= -1;
 		return;
 	}
-	if (level2_get_tile(st->npc_y, next_x) == '#') {
+	if (level1_get_tile(st->npc_y, next_x) == '#') {
 		st->npc_dir *= -1;
 		return;
 	}
@@ -207,8 +207,8 @@ static void level2_update_npc(Level2State *st) {
 /*main gameplay */
 
 
-void play_level2(void) {
-	Level2State st;
+void play_level1(void) {
+	Level1State st;
 
 	st.player_y = 1;
 	st.player_x = 1;
@@ -227,7 +227,7 @@ void play_level2(void) {
 	int max_y, max_x;
 
 	while (st.running) {
-		level2_render(&st);
+		level1_render(&st);
 		getmaxyx(stdscr, max_y, max_x);
 	
 		int ch = getch();
@@ -246,8 +246,8 @@ void play_level2(void) {
 		if (ch == KEY_LEFT) new_x--;
 		if (ch == KEY_RIGHT) new_x++;
 
-		if (level2_can_move_to(new_y, new_x)) {
-			char tile = level2_get_tile(new_y, new_x);
+		if (level1_can_move_to(new_y, new_x)) {
+			char tile = level1_get_tile(new_y, new_x);
 
 			if (tile == 'D') {
 				if(st.has_key) {
@@ -274,14 +274,14 @@ void play_level2(void) {
 					int drop_y = st.npc_y + 1;
 					int drop_x = st.npc_x;
 			
-					if (level2_get_tile(drop_y, drop_x) == '#') {
+					if (level1_get_tile(drop_y, drop_x) == '#') {
 						drop_y = st.npc_y -1;
 					}
-					if (level2_get_tile(drop_y, drop_x) == '#') {
+					if (level1_get_tile(drop_y, drop_x) == '#') {
 						drop_y = st.npc_y;
 						drop_x = st.npc_x + 1;
 					}
-					if (level2_get_tile(drop_y, drop_x) == '#') {
+					if (level1_get_tile(drop_y, drop_x) == '#') {
 						drop_x = st.npc_x - 1;
 					}
 
@@ -311,6 +311,6 @@ void play_level2(void) {
 			refresh();
 			getch();
 		}
-		level2_update_npc(&st);
+		level1_update_npc(&st);
 	}
 }

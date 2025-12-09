@@ -23,7 +23,7 @@ When Play game is selected, the splash screen opens the level selection menu. Af
 #include "splash.h"
 #include <string.h>
 #include "level_select.h"
-// #include "level1.h"
+#include "level1.h"
 #include "level2.h"
 
 
