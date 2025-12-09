@@ -251,7 +251,7 @@ void play_level2(void) {
 
 			if (tile == 'D') {
 				if(st.has_key) {
-					game_end_screen("YOU WIN!", "escaped hard maze using key");
+					game_end_screen("YOU WIN!", "You've escaped the most difficult maze of all time.");
 					st.running = false;
 					continue;
 					

@@ -112,7 +112,7 @@ static void pause_quit_menu(void) {
 	clear();
 	box(stdscr,0,0);
 	center_text(max_y / 2 - 1, "Game is paused.");
-	center_text(max_y / 2, "Do you want to quit? (Q = Quit, P =  Continue)");
+	center_text(max_y / 2, "Do you want to quit? ([Q] = Quit, [P] = Continue)");
 
 	int ch;
 	while (1) {
