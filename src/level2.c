@@ -159,8 +159,7 @@ static void level2_render(const Level2State *st) {
 		box(stdscr, 0,0);
 		
 		int offset_y = 1;
-		int offset_x = 1;
-	
+		int offset_x = (max_x - LEVEL2_WIDTH) / 2;	
 		level2_render_map(offset_y, offset_x);
 		level2_render_entities(st, offset_y, offset_x);
 		level2_render_hud(st);
