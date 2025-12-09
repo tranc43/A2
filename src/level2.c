@@ -138,10 +138,36 @@ static void level2_render_entitites(const Level2State *st, int offset_y, int off
 			mvaddch(offset_y + st->key_y, offset_x + st->key_x, 'K');
 
 		}
+		// PLAYER
 
+		mvaddch(offset_y + st->player_y, offset_x + st->player_x, '0');
 }
 
 
+static void level2_render_hud(const Level2State *st) {
+		int max_y, max_x;
+		getmaxyx(stdscr, max_y, max_x);
+		
+		mvprintw(max_y - 3, 2, "LEVEL 2- HARD MAZE");
+		mvprintw(max_y - 2, 2, 
+			"Key: %s | T = Talk to npc | X = Pick up key | P/Q = Pause and Quit", st->has_key ? "YES" : (st->key_on_ground ? "ON GROUND" : "NO")):
+}
+
+
+static void level2_render(const Level2State *st) {
+		clear();
+		box(stdscr, 0,0);
+		
+		int offset_y = 1;
+		int offset_x = 1;
+	
+		level2_render_map(offset_y, offset_x);
+		level2_render_entities(st, offset_y, offset_x);
+		level2_render_hud(st);
+
+		refresh();
+
+}
 
 
 
