@@ -8,47 +8,48 @@
 # debug target
 # doc target
 
-CC = gcc
+CC = gcc 
 CFLAGS = -Wall -Wextra -std=c11
 LDFLAGS = -lncurses
 
 SRCS = main.c splash.c level_select.c level1.c level2.c
-OBJ = $(SRCS:.c=.o)
+OBJS = $(SRCS:.c=.o)
 
-BIN_RELEASE = ../bin/appGame
-BIN_DEBUG = ../bin/appGame_debug
+BIN_DIR = ../bin
+APP_NAME = appGame
+BIN_RELEASE =  $(BIN_DIR)/$(APP_NAME)
+BIN_DEBUG = $(BIN_DIR)/$(APP_NAME)_debug
 
 .PHONY: all clean mem_valgrind debug doc
 
-# app game target
-all: $(BIN_RELEASE)
+# appgame target
 
-$(BIN_RELASE): $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) $(LDFLAGS) -o $(BIN_RELASE)
-	@echo "Completed -> $(BIN_RELEASE)"
+all: appGame
+appGame: $(BIN_RELEASE)
 
-%.o: %.c 
+$(BIN_DIR):
+	mkdir -p $(BIN_DIR)
+
+$(BIN_RELEASE): $(OBJS) | $(BIN_DIR)
+	$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) -o $@
+	@echo "Build complete"
+
+%.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# clean target
 clean:
-	rm -f $(OBJ) $(BIN_RELASE) $(BIN_DEBUG)
-	@echo "Cleaned"
-# mem_valgrind target
+	rm -f $(OBJS) $(BIN_RELEASE) $(BIN_DEBUG)
+	@echo "Cleaned object and files"
 
-mem_valgrind: $(BIN_RELASE)
-	valgrind --leak-check=full --show-leak-kinds=all $(BIN_RELASE)
+mem_valgrind: $(BIN_RELEASE)
+	valgrind --leak-check=full --show-leak-kinds=all $(BIN_RELEASE)
 
-
-# debug target
 debug: CFLAGS += -g -DDEBUG
-debug: $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) $(LDFLAGS) -o $(BIN_DEBUG)
-	@echo "Debug build is finished -> $(BIN_DEBUG)"
+debug: $(OBJS) | $(BIN_DIR)
+	$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) -o $(BIN_DEBUG)
+	@echo "Debug build complete"
 
-
-# doc target
-doc: 
+doc:
 	mkdir -p ../doc
 	doxygen ../Doxyfile
 	@echo "Documentation generated"
