@@ -250,6 +250,52 @@ void play_level2(void) {
 				st.player_x = new_x;
 			}
 		}
-	
+		if (ch == 't' || ch == 'T') {
+			int dy = st.player_y - st.npc_y;
+			int dx = st.player_x - st.npc_x;
+			
+			if (abs(dx) + abs(dy) <= 1) {
+				if (!st.has_key && !st.key_on_ground) {
+					int drop_y = st.npc_y + 1;
+					int drop_x = st.npc_x;
+			
+					if (level2_get_tile(drop_y, drop_x) == '#') {
+						drop_y = st.npc_y -1;
+					}
+					if (level2_get_tile(drop_y, drop_x_ == '#') {
+						drop_y = st.npc_y;
+						drop_x = st.npc_x + 1;
+					}
+					if (level2_get_tile(drop_y, drop_x) == '#') {
+						drop_x = st.npc_x - 1;
+					}
+
+					st.key_y = drop_y;
+					st.key_x = drop_x;
+					st.key_on_ground = true;
+			
+					mvprintw(max_y - 4, 2, "NPC: Dropped a key, pick it up with X!");
+					refresh();
+					getch();
+				} else if (st.has_key) {
+					mvprintw(max_y - 4, 2, "NPC: You picked it up already!");
+					refresh();
+					getch();
+				} else {
+					mvprintw(max_y - 4, 2, "NPC: The keys on the ground still..");
+					refresh();
+					getch();
+				}
+			}
+		}
+		if ((ch == 'x' || ch == 'X') && st.key_on_ground && st.player_y == st.key_y && st.player_x == st.key_x) {
+			st.key_on_ground = false;
+			st.has_key = true;
+			
+			mvprintw(max_y - 4, 2, "You picked up the key!");
+			refresh();
+			getch();
+		}
+		level2_update_npc(&st);
 	}
 }
