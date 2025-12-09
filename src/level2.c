@@ -86,6 +86,7 @@ typedef struct {
 
 static void center_text(int y, const char *text) {
 	int max_y, max_x;
+	(void)max_y;
 	getmaxyx(stdscr, max_y, max_x);
 	mvprintw(y, (max_x - (int)strlen(text)) / 2, "%s", text);
 	
@@ -105,7 +106,7 @@ Behaviour:
 static void pause_quit_menu(void) {
 	int max_y, max_x;
 	getmaxyx(stdscr, max_y, max_x);
-
+	(void)max_x;
 	clear();
 	box(stdscr,0,0);
 	center_text(max_y / 2 - 1, "Game is paused.");
@@ -137,6 +138,7 @@ The screen allows for:
 
 static void game_end_screen(const char *line1, const char *line2) {
 	int max_y, max_x;
+	(void)max_x;
 	getmaxyx(stdscr, max_y, max_x);
 
 	clear();
@@ -248,6 +250,7 @@ Displays
 */
 static void level2_render_hud(const Level2State *st) {
 		int max_y, max_x;
+		(void)max_x;
 		getmaxyx(stdscr, max_y, max_x);
 		
 		mvprintw(max_y - 3, 2, "LEVEL 2- HARD MAZE");
@@ -272,6 +275,7 @@ Called once per game loop.
 */
 static void level2_render(const Level2State *st) {
 		int max_y, max_x;
+		(void)max_y;
 		getmaxyx(stdscr, max_y, max_x);
 		clear();
 		box(stdscr, 0,0);
@@ -353,7 +357,7 @@ void play_level2(void) {
 	st.running = true;
 
 	int max_y, max_x;
-
+	(void)max_x;
 	while (st.running) {
 		level2_render(&st);
 		getmaxyx(stdscr, max_y, max_x);
