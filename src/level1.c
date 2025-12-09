@@ -95,6 +95,7 @@ Behaviour:
 
 static void center_text(int y, const char *text) {
 	int max_y, max_x;
+	(void)max_y;
 	getmaxyx(stdscr, max_y, max_x);
 	mvprintw(y, (max_x - (int)strlen(text)) / 2, "%s", text);
 	
@@ -110,6 +111,7 @@ Behaviour:
 
 static void level1_win_menu(void) {
 	int max_y, max_x;
+	(void)max_x;
 	getmaxyx(stdscr, max_y, max_x);
 
 	clear();
@@ -152,6 +154,7 @@ behaviour:
 
 static void pause_quit_menu(void) {
 	int max_y, max_x;
+	(void)max_x;
 	getmaxyx(stdscr, max_y, max_x);
 
 	clear();
@@ -259,6 +262,7 @@ displays:
 */
 static void level1_render_hud(const Level1State *st) {
 		int max_y, max_x;
+		(void)max_x;
 		getmaxyx(stdscr, max_y, max_x);
 		
 		mvprintw(max_y - 3, 2, "LEVEL 1- EASY MAZE");
@@ -281,6 +285,7 @@ Called once per game loop
 
 static void level1_render(const Level1State *st) {
 		int max_y, max_x;
+		(void)max_y;
 		getmaxyx(stdscr, max_y, max_x);
 		clear();
 		box(stdscr, 0,0);
@@ -358,14 +363,14 @@ void play_level1(void) {
 
 	st.running = true;
 
-	int max_y, max_x;
 
+	int max_y, max_x;
+	(void)max_x;	
 	while (st.running) {
 		level1_render(&st);
-		getmaxyx(stdscr, max_y, max_x);
-	
+		getmaxyx(stdscr,max_y,max_x);
 		int ch = getch();
-		
+
 		if (ch == 'p'|| ch == 'P' || ch == 'q' || ch == 'Q') {
 			pause_quit_menu();
 			continue;

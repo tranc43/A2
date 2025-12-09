@@ -35,6 +35,7 @@ and this value is used by the splash screen to launch the correct level.
 */
 static void center_text(int y, const char *text) {
 	int max_y, max_x;
+	(void)max_y;
 	getmaxyx(stdscr, max_y, max_x);
 	mvprintw(y, (max_x - (int)strlen(text)) / 2, "%s", text);
 

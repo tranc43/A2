@@ -62,8 +62,7 @@ void splash_screen() {
 	const char *options[] = {"Play Game", "Quit"};
 	int num_options = 2;
 	
-	int max_y, max_x;
-	getmaxyx(stdscr, max_y, max_x);
+
 	while (1) { 
 		clear();
 		box(stdscr, 0, 0);
