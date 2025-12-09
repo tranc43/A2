@@ -24,7 +24,7 @@ static const char *level2_layout[LEVEL2_HEIGHT] = {
 	"#  # # # #      # #     # # #  # # # # #     #      #     ##",//6
 	"#  # # # ###### # ##### # # # ## # # # ####### #### ## #####",//7
 	"#  # # #      # #     # # # #    # # #       # #  #      ###",//8
-	"#  # # ###### # ##### # # ######## # ######### #  #####  ###",//9
+	"#  # # ###### ####### # # ######## # ######### #  #####  ###",//9
 	"#  # #      # #     # # #        # #         # #      #  # #",//10
 	"#  # ###### # ##### # # #######  #  ######## #  ########## #",//11
 	"#  #      # #     #           #  #           #        #    #",//12
@@ -155,6 +155,8 @@ static void level2_render_hud(const Level2State *st) {
 
 
 static void level2_render(const Level2State *st) {
+		int max_y, max_x;
+		getmaxyx(stdscr, max_y, max_x);
 		clear();
 		box(stdscr, 0,0);
 		
