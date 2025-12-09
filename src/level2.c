@@ -310,7 +310,29 @@ static void level2_update_npc(Level2State *st) {
 
 
 
-/*main gameplay */
+/*
+@brief starts level 2 and runs the complete gameplay loop
+
+Responsible for:
+	1. Intialize all state vars
+	2. Handle keyboard input
+	3. Animate NPC patrol
+	4. Handle NPC interaction
+	5. Drop key and allow pickup
+	6. Prevent Door from opening until key is collected
+	7. Support pause quit menu
+	8. Display win screen when door is opened
+
+Game ends when:
+	Player wins
+	Player quits
+	Player chooses to return
+
+
+@return void
+
+
+ */
 
 
 void play_level2(void) {
@@ -342,7 +364,7 @@ void play_level2(void) {
 			pause_quit_menu();
 			continue;
 		}
-		// Plater movement
+		// Player movement
 		
 		int new_y = st.player_y;
 		int new_x = st.player_x;

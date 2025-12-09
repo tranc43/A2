@@ -1,5 +1,6 @@
 /*
 @name Christian tran
+@name Brice Matias
 @file splash.c
 @brief impl ements the games splash screen (main menu)
 

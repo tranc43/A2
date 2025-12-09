@@ -1,5 +1,6 @@
 /*
 @name Christian tran
+@name Brice Matias
 @file level_select.c
 @brief Implements level selection menu for the game
 

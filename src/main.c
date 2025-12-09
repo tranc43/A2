@@ -1,5 +1,6 @@
 /*
 @name Christian Tran
+@name Brice Matias
 @file main.c
 @brief Entry point for the MACMAN game
 

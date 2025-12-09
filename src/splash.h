@@ -1,5 +1,6 @@
 /**
 * @name CHRISTIAN TRAN
+* @name BRICE MATIAS
 * @file splash.h
 * @brief Function declarations for game menu screen
 *
