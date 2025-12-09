@@ -17,7 +17,7 @@ Level 1 includes:
 #include <stdbool.h>
 #include <stdlib.h>
 #include "level1.h"
-
+#include "level2.h"
 #define LEVEL1_HEIGHT 18
 #define LEVEL1_WIDTH 60
 
@@ -69,6 +69,40 @@ static void center_text(int y, const char *text) {
 	getmaxyx(stdscr, max_y, max_x);
 	mvprintw(y, (max_x - (int)strlen(text)) / 2, "%s", text);
 	
+}
+
+static void level1_win_menu(void) {
+	int max_y, max_x;
+	getmaxyx(stdscr, max_y, max_x);
+
+	clear();
+	box(stdscr, 0, 0);
+
+	center_text(max_y / 2 - 3, "LEVEL 1 COMPLETE");
+	center_text(max_y / 2 - 1, "What would you like to do next?");
+	center_text(max_y / 2 + 1, "[1] Play Level 2");
+	center_text(max_y / 2 + 2, "[M] Return to Main Menu");
+	center_text(max_y / 2 + 3, "[Q] Quit Game");
+
+	refresh();
+
+	int ch;
+
+	while (1) {
+		ch = getch();
+		if (ch == '1') {
+			play_level2();
+			break;
+		} else if (ch == 'm' || ch == 'M') {
+			break;
+		} else if (ch == 'q' || ch == 'Q') {
+			endwin();
+			exit(0);
+		}
+
+	}
+	
+
 }
 
 static void pause_quit_menu(void) {
