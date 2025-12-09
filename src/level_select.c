@@ -1,7 +1,37 @@
+/*
+@name Christian tran
+@file level_select.c
+@brief Implements level selection menu for the game
+
+this module displays a menu allowiong the player to choose
+	- level 1 (easy)
+	- level 2 (hard)
+	- Go back to the splash screen
+	- Quit the game (Q)
+
+
+Navigation:
+	- Arrow keys move the lighlight options
+	- Enter selects 
+	- Q to quit
+
+function returns an int to indicate player choice
+and this value is used by the splash screen to launch the correct level. 
+*/
+
+
+
 #include <ncurses.h>
 #include <string.h>
 #include "level_select.h"
 
+/*
+@brief helper function to print centered text on the screen
+
+@param y the y coordinate to print.
+@param txt thew text to print it centered
+
+*/
 static void center_text(int y, const char *text) {
 	int max_y, max_x;
 	getmaxyx(stdscr, max_y, max_x);
@@ -9,6 +39,16 @@ static void center_text(int y, const char *text) {
 
 }
 
+/*
+@brief displ;ays the level select menu and returns the users choice.
+
+@return int
+	- 1 -> level 1
+	- 2 -> level 2
+	- 0 -> go back tp splash
+	- -1 -> quit
+
+*/
 
 int level_select_menu(void) {
 	const char *options[] = {"Level 1", "Level 2", "Return to Menu"};
@@ -36,7 +76,6 @@ int level_select_menu(void) {
 		}
 		refresh();
 		ch = getch();
-
 		if (ch == 'q' || ch == 'Q')
 			return -1;
 		switch (ch) {
