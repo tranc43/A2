@@ -3,7 +3,7 @@
 @file level1.h
 @brief function prototype for running Level 1 (easy level)
 
-Level 2 contains:
+Level 1 contains:
 	- Maze navigation with arrow keys to move
 	- Interactable NPC using T
 	- Drop key element after talking to NPC using X

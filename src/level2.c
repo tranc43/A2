@@ -1,4 +1,6 @@
 /*
+@name Christian Tran 
+@name Brice Matias
 @file level2.c
 @brief Implements Level 2: Hard maze including NPC interaction, dropped key
 locked door, movement, pause menu and win conidtion
@@ -6,11 +8,13 @@ locked door, movement, pause menu and win conidtion
 Level 2 includes:
 	- Maze navigated using arrow keys
 	- Npc that moves horizontrally and interacts with player with T keybind
+	- A Dropped key object placed by the NPC when spoke to
+	- Pickup key mechanic using X
+	- Door being the win condition
+	- Pause/Quit logic with P and Q
 
+This file handles all the gameplay logic, state management, rendering for level2. Maze layout is stored in global array
 */
-
-
-
 
 #include <ncurses.h>
 #include <string.h>
@@ -23,11 +27,10 @@ Level 2 includes:
 
 
 /*
+@brief Map layout for the game
 # = wall
 ' ' = path
 D = locked exist door
-
-
 */
 static const char *level2_layout[LEVEL2_HEIGHT] = {
 	"############################################################",//1
@@ -51,7 +54,18 @@ static const char *level2_layout[LEVEL2_HEIGHT] = {
 };
 
 
-// Game state
+/*
+@struct Level2State
+@brief Holds all runtime state variables for level 2 
+
+Structure tracks the following:
+	1. Player Position
+	2. NPC position + patrol direction
+	3. Whether the key has been dropped or picked up
+	4. Key position
+	5. whether the level is still running
+
+*/
 typedef struct {
 	int player_y, player_x;
 	int npc_y, npc_x;
@@ -64,12 +78,29 @@ typedef struct {
 
 } Level2State;
 
+/*
+@brief Prints text horizontally at the given row
+@param y Row coordinate where text prints
+@param txt Null terminated string to display
+*/
+
 static void center_text(int y, const char *text) {
 	int max_y, max_x;
 	getmaxyx(stdscr, max_y, max_x);
 	mvprintw(y, (max_x - (int)strlen(text)) / 2, "%s", text);
 	
 }
+
+/*
+@brief displays pause menu when player presses P or Q
+
+text displays to user if they want to quit and how to via Q or P.
+
+Behaviour:
+	1. Pressing Q -> exits program
+	2. Pressing P -> Resumes gameplay
+
+*/
 
 static void pause_quit_menu(void) {
 	int max_y, max_x;
@@ -93,6 +124,16 @@ static void pause_quit_menu(void) {
 
 	}
 }
+/*
+@brief Displays end level of screen when player completes level
+
+The screen allows for:
+	1. M -> return to main menu
+	2. Q -> Quit program
+
+@param line1 title text
+@param line2 description text
+*/
 
 static void game_end_screen(const char *line1, const char *line2) {
 	int max_y, max_x;
@@ -118,7 +159,15 @@ static void game_end_screen(const char *line1, const char *line2) {
 	}
 }
 
+/*
+@#brief Returns the map tile char at (y,x) with boundary checking.
 
+Out of range coords are treated as walls.
+@Param y row index into m aze layout array
+@param x column index
+@return chart tile character from maze.
+
+*/
 
 static char level2_get_tile(int y, int x) {
 	 if (y < 0 || y >= LEVEL2_HEIGHT || x < 0 || x >= LEVEL2_WIDTH) {
@@ -127,12 +176,30 @@ static char level2_get_tile(int y, int x) {
 	return level2_layout[y][x];
 
 }
+/*
+@brief determines whether the player is allowed to move into a tile
 
+Walls (#) cant be entered. Doors are handled separately "D" in the movement logic
+
+@param new_y for new row
+@param new_x for new column
+@return true if movement is allowed
+@return false if tile is a wall.
+
+*/
 static char level2_can_move_to(int new_y, int new_x) {
 	char tile = level2_get_tile(new_y, new_x);
 	return tile != '#';
 
 }
+
+/*
+@brief draws the maze layout (walls, space and doors)
+@param offset_y vertical offset from the top left corner of the window
+@param offset_x horizontal offset for centering 
+
+*/
+
 
 static void level2_render_map(int offset_y, int offset_x) {
 	for (int y = 0; y < LEVEL2_HEIGHT; y++) {
@@ -145,6 +212,19 @@ static void level2_render_map(int offset_y, int offset_x) {
 
 }
 
+/*
+@brief draws dynamic game entities: player,npc, dropped key
+
+Entities:
+	O -> player
+	N -> NPC
+	k -> key (only after interaction)
+
+@param st Pointer to level 2 state
+@param offset_y vertical map offset used for drawing
+@param offset_x Horizontal map offset used fopr drawing
+
+*/
 static void level2_render_entities(const Level2State *st, int offset_y, int offset_x) {
 		mvaddch(offset_y + st->npc_y, offset_x + st->npc_x, 'N');
 
@@ -157,7 +237,15 @@ static void level2_render_entities(const Level2State *st, int offset_y, int offs
 		mvaddch(offset_y + st->player_y, offset_x + st->player_x, '0');
 }
 
+/*
+@brief draws the status panel HUD showing states and controls
+@param st Pointer to level2State containing key info
 
+Displays
+	1. If player has key
+	2. If key is on ground
+	3. Input controls
+*/
 static void level2_render_hud(const Level2State *st) {
 		int max_y, max_x;
 		getmaxyx(stdscr, max_y, max_x);
@@ -168,6 +256,20 @@ static void level2_render_hud(const Level2State *st) {
 }
 
 
+/*
+@brief renders all level 2 components for the current frame.
+
+Includes 
+	1. Window border
+	2. Maze layout
+	3. Npc, key and player entities
+	4. hud text
+
+Called once per game loop.
+
+@param st Pointer to the current game state
+
+*/
 static void level2_render(const Level2State *st) {
 		int max_y, max_x;
 		getmaxyx(stdscr, max_y, max_x);
@@ -185,7 +287,11 @@ static void level2_render(const Level2State *st) {
 }
 
 
-/*NPC */
+/*
+@brief Updattes npc movement each frame
+Npc Patrols horizontally and reverses direction when it encounters a boundary
+@param st pointer to the level 2 game state
+*/
 
 static void level2_update_npc(Level2State *st) {
 	int next_x = st->npc_x + st->npc_dir;

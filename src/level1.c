@@ -1,4 +1,6 @@
 /*
+@name Christian tran
+@name Brice Matias
 @file level1.c
 @brief Implements Level 1: Hard maze including NPC interaction, dropped key
 locked door, movement, pause menu and win conidtion
@@ -26,8 +28,6 @@ Level 1 includes:
 # = wall
 ' ' = path
 D = locked exist door
-
-
 */
 static const char *level1_layout[LEVEL1_HEIGHT] = {
 	"############################################################",//1
