@@ -110,13 +110,16 @@ void splash_screen() {
 			case 10: // ENTER
 				if (highlight == 0) {
 					int selected = level_select_menu();
-					if (selected == -1) 
-						return;
-					 
-					if (selected == 0) 
-						continue;
-					if (selected == 2) 
+					if (selected == 1){ 
+						play_level1();
+					}else if (selected == 2){ 
 						play_level2();
+					}else if (selected == 0){
+						continue;
+					}else if (selected == -1) {
+						endwin(); 
+						return;
+					}
 				}
 				else if (highlight == 1) {
 					// Quit selected

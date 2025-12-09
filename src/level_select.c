@@ -86,9 +86,9 @@ int level_select_menu(void) {
 				highlight = (highlight + 1) % num_options;
 				break;
 			case 10: // ENTER
-				if (highlight == 0) return 0;
-				if (highlight == 1) return 1;
-				if (highlight == 2) return 2; 
+				if (highlight == 0) return 1;
+				if (highlight == 1) return 2;
+				if (highlight == 2) return 0; 
 
 		}
 
