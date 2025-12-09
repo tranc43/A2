@@ -12,7 +12,7 @@
 # = wall
 ' ' = path
 D = locked exist door
-N = Npc ara
+
 
 */
 static const char *level2_layout[LEVEL2_HEIGHT] = {
@@ -25,11 +25,11 @@ static const char *level2_layout[LEVEL2_HEIGHT] = {
 	"#  # # # ###### # ##### # # # ## # # # ####### #### ## #####",//7
 	"#  # # #      # #     # # # #    # # #       # #  #      ###",//8
 	"#  # # ###### # ##### # # ######## # ######### #  #####  ###",//9
-	"#  # #      # #     # # #        # #         # #      # #  #",//10
+	"#  # #      # #     # # #        # #         # #      #  # #",//10
 	"#  # ###### # ##### # # #######  #  ######## #  ########## #",//11
-	"#  #      # #     #           #  #       N   #        #    #",//12
+	"#  #      # #     #           #  #           #        #    #",//12
 	"#  ###### # ##### ########### #  ########### ######## #   ##",//13
-	"#       # #     #           # #         #   #      # #     #",//14
+	"#       # #     #           # #         #  #       #  #    #",//14
 	"####### # ##### ########### # ####### # # ### #### # ###   #",//15
 	"#     # #     #         # #           #     #    # #       #",//16
 	"#     #       #         # #        #    #        #         #",//17
@@ -64,7 +64,7 @@ static void pause_quit_menu(void) {
 	clear();
 	box(stdscr,0,0);
 	center_text(max_y / 2 - 1, "Game is paused.");
-	center_text(max_y / 2, "Do you want to quit? (Q = Quit, P =  Continue");
+	center_text(max_y / 2, "Do you want to quit? (Q = Quit, P =  Continue)");
 
 	int ch;
 	while (1) {

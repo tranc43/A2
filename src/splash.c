@@ -2,7 +2,7 @@
 #include "splash.h"
 #include <string.h>
 #include "level_select.h"
-#include "level1.h"
+// #include "level1.h"
 #include "level2.h"
 
 void center_text(int y, const char *text) {
