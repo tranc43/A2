@@ -192,7 +192,7 @@ static void level1_render_entities(const Level1State *st, int offset_y, int offs
 }
 
 
-static void level1_render_hud(const Level2State *st) {
+static void level1_render_hud(const Level1State *st) {
 		int max_y, max_x;
 		getmaxyx(stdscr, max_y, max_x);
 		
@@ -202,7 +202,7 @@ static void level1_render_hud(const Level2State *st) {
 }
 
 
-static void level1_render(const Level2State *st) {
+static void level1_render(const Level1State *st) {
 		int max_y, max_x;
 		getmaxyx(stdscr, max_y, max_x);
 		clear();
