@@ -170,6 +170,22 @@ static void level2_render(const Level2State *st) {
 }
 
 
+/*NPC */
+
+static void level2_update_npc(Level2State *st) {
+	int next_x = st->npc_x + st->npc_dir;
+
+	if (next_x < 0 || next_x >= LEVEL2_WIDTH) {
+		st->npc_dir *= -1;
+		return;
+	}
+	if (level2_get_tile(st->npc_y, next_x) == '#') {
+		st->npc_dir *= -1;
+		return;
+	}
+	st->npc_x = next_x;
+}
+
 
 
 
